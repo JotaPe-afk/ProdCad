@@ -1,10 +1,12 @@
 package com.jp.demo.controllers;
 
+import com.jp.demo.model.ProdutoModel;
 import com.jp.demo.repository.ProdutoRepository;
 import com.jp.demo.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/produto")
@@ -12,4 +14,24 @@ public class ProdutoController {
 
     @Autowired
     private ProdutoService produtoService;
+
+    @PostMapping
+    public ProdutoModel cadastrar(ProdutoModel produtoModel) {
+        return produtoService.cadastrar(produtoModel);
+    }
+
+    @GetMapping
+    public List<ProdutoModel> findAll() {
+        return produtoService.findAll();
+    }
+
+    @DeleteMapping
+    public void delete(@PathVariable Long id) {
+        produtoService.delete(id);
+    }
+
+    @PutMapping
+    public ProdutoModel atualizar(@PathVariable Long id, @RequestBody ProdutoModel produtoModel) {
+        return produtoService.atualizar(id, produtoModel);
+    }
 }
